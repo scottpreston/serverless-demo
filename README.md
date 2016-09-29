@@ -60,3 +60,18 @@ Second, put an item (document), in this table.
 Third, query the table:
 
 `aws dynamodb scan --table-name ServerlessDemo2016`
+
+## Lambda Setup
+
+First create your lambda code, this is a Java or JavaScript function. Then upload it to AWS:
+
+`aws lambda create-function \
+--function-name serverless-demo2016-scan \
+--zip-file fileb://lambda/serverless-scan.js.zip \
+--role arn:aws:iam::xxxxxxxxxxxxxx:role/lambda_dynamo \
+--handler serverless-scan.handler \
+--runtime nodejs4.3`
+
+Now test your function:
+
+`aws lambda invoke --function-name serverless-demo2016-scan /dev/stdout`
