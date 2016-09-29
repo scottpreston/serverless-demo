@@ -27,7 +27,7 @@ Third, upload/sync your site content with s3.
 
 Finally, update the security policy document for the bucket.
 
-`aws s3api put-bucket-policy --bucket serverless-demo2016 --policy file://s3-policy.json`
+`aws s3api put-bucket-policy --bucket serverless-demo2016 --policy file://./s3/s3-policy.json`
 
 Test it by opening your browser and pasting: where your bucket name replaces 'serverless-demo2016':
 
