@@ -1,0 +1,6 @@
+{
+  "uuid" : {"S" : "1"}, 
+  "email" : {"S": "foo@bar.com"},
+  "name" : {"S": "foo bar"},
+  "comment" : {"S": "this is an awesome demo!"}
+}

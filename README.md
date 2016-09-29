@@ -32,3 +32,31 @@ Finally, update the security policy document for the bucket.
 Test it by opening your browser and pasting: where your bucket name replaces 'serverless-demo2016':
 
 `http://serverless-demo2016.s3-website-us-east-1.amazonaws.com`
+
+## Dynamo DB Setup
+
+First, create the table:
+
+` aws dynamodb create-table \
+    --table-name ServerlessDemo2016 \
+    --attribute-definitions \
+        AttributeName=uuid,AttributeType=S \
+    --key-schema AttributeName=uuid,KeyType=HASH\
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1`
+
+Some more details:
+
+The Table Name : **ServerlessDemo2016**
+The Attributes (Key) : **uuid**
+
+DynamoDB supports **key-value** as well as **document** data structures. So when creating a table in
+DynamoDB, we need to create table with it's key column, then we can put whatever document we see fit inside
+along with that **key**.
+
+Second, put an item (document), in this table.
+
+`aws dynamodb put-item --table-name ServerlessDemo2016 --item file://./dynamo/dynamo-sample-document.json`
+
+Third, query the table:
+
+`aws dynamodb scan --table-name ServerlessDemo2016`
