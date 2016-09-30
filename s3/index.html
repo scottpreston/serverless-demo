@@ -1,1 +1,44 @@
-serverless demo - hello world!
+<html>
+  <head>
+    <title>serverless demo - hello world!</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1>serverless demo - hello world!</h1>
+    <form>
+      Name: <input type="text" name="name" class="name"><br>
+      Email: <input type="text" name="email" class="email"><br>
+      Comments: <input type="text" name="comments" class="comments"><br>
+      <button class="submit">Submit</form>
+    </form>
+    <script>
+    $(document).ready(function() {
+      $('.submit').click(function(e) {
+        e.preventDefault();
+        var url = "https://0lfp1cc81c.execute-api.us-east-1.amazonaws.com/prod/serverlessdemo2016";
+        var postData = {
+          uuid: generateUUID(),
+          name: $('.name').val(),
+          email: $('.email').val(),
+          comments: $('.comments').val(),
+        };
+        $.post(url,JSON.stringify(postData),function(data) {
+          console.log(data);
+          alert(data);
+        }, "json");
+      });
+    });
+
+    function generateUUID() {
+      var d = new Date().getTime();
+      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+          return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+        });
+      return uuid;
+    };
+
+</script>
+</body>
+</html>

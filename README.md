@@ -2,7 +2,7 @@
 
 A simple example of going serverless on AWS with instructions.
 
-Prerequisites
+## Prerequisites
 
 1. Have an AWS Account
 2. Install AWS Command Line Tools (AWS-CLI) - https://aws.amazon.com/cli/
@@ -27,7 +27,7 @@ Third, upload/sync your site content with s3.
 
 Finally, update the security policy document for the bucket.
 
-`aws s3api put-bucket-policy --bucket serverless-demo2016 --policy file://./s3/s3-policy.json`
+`aws s3api put-bucket-policy --bucket serverless-demo2016 --policy file://s3/s3-policy.json`
 
 Test it by opening your browser and pasting: where your bucket name replaces 'serverless-demo2016':
 
@@ -37,7 +37,7 @@ Test it by opening your browser and pasting: where your bucket name replaces 'se
 
 First, create the table:
 
-` aws dynamodb create-table \
+`aws dynamodb create-table \
     --table-name ServerlessDemo2016 \
     --attribute-definitions \
         AttributeName=uuid,AttributeType=S \
@@ -55,7 +55,7 @@ along with that **key**.
 
 Second, put an item (document), in this table.
 
-`aws dynamodb put-item --table-name ServerlessDemo2016 --item file://./dynamo/dynamo-sample-document.json`
+`aws dynamodb put-item --table-name ServerlessDemo2016 --item file://dynamo/dynamo-sample-document.json`
 
 Third, query the table:
 
@@ -63,7 +63,9 @@ Third, query the table:
 
 ## Lambda Setup
 
-First create your lambda code, this is a Java or JavaScript function. Then upload it to AWS:
+First, create a role via http://aws.amazon.com, that has permission to read and write to DynamoDB.
+
+Second, create your lambda code, this is a Java or JavaScript function. Then upload it to AWS:
 
 `aws lambda create-function \
 --function-name serverless-demo2016-scan \
@@ -75,3 +77,18 @@ First create your lambda code, this is a Java or JavaScript function. Then uploa
 Now test your function:
 
 `aws lambda invoke --function-name serverless-demo2016-scan /dev/stdout`
+
+## Connecting Lambda to API Gateway
+
+Login to AWS Console https://aws.amazon.com.
+
+1. Click on API Gateway
+2. Create an API
+3. Create a Resource
+4. Integrate via Lambda
+5. Turn on  CORS
+6. Deploy Your API.
+7. Create a "stage".
+8. Test your resource.
+
+Test via your browser: https://API-ID.execute-api.us-east-1.amazonaws.com/prod/serverlessdemo2016
